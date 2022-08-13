@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+
+    <script src="./components/Movement.js"></script>
+    <script src="./components/Coin.js"></script>
+    <script src="./components/Bird.js"></script>
+    <script src="./components/Game.js"></script>
+  </head>
+
+  <body>
+    <a-scene background="color:#026F90" physics id="scene">
+      <a-entity id="look" look-controls camera position="0 2 20"></a-entity>
+
+      <!--Asset Management-->
+        <a-asset-item
+          id="plane"
+          src="./assets/models/airplane/scene.gltf"
+        ></a-asset-item>
+      </a-assets>
+
+      <!-- Targets -->
+      <a-entity ></a-entity>
+
+      <!-- Background -->
+      <a-entity
+        id="environment"
+        environment="preset: dream; skyType:none; lighting:point"
+        animation="property: position; to: 0 0 1000;easing:linear; loop: true; dur: 150000"
+        scale="5 2 5"
+        position="0 -30 0"
+        terrain-movement-reader
+      >
+      </a-entity>
+
+      <a-entity position="0 -4 0" flying-birds target-coins></a-entity>
+
+      <!-- Camera -->
+      <a-camera id="camera" camera look-controls="pointerLockEnabled: false" position="0 0 18">
+        <!-- Plane -->
+        <a-entity
+          id="plane_model"
+          gltf-model="#plane"
+          scale="1 1 1"
+          position="0 1 1"
+          rotation="0 90 0"
+          game-play
+        >
+        </a-entity>
+      </a-camera>
+
+      <!-----------------------------------Game Timer and Score------------------------------------------>
+      <a-entity id="header" position="3 -4 0">
+        <!-- Title -->
+        <a-entity
+          position="-27.5 21.5 0"
+          text="font: exo2bold; align: center; width: 40; color: black; value: VIRTUAL FLIGHT"
+        ></a-entity>
+
+        <!-- Timer -->
+        <a-entity position="-22.5 19.3 0">
+          <a-entity
+            position="-1.5 0.07 0"
+            text="font: aileronsemibold; width: 12; color: black; value: TIME\nREMAINING"
+          ></a-entity>
+          <a-entity
+            id="timer"
+            position="-9.8 0.3 0"
+            text="font: exo2bold; align: center; width: 30; color: black; value: 00:00"
+          ></a-entity>
+        </a-entity>
+
+        <!-- Target Status -->
+        <a-entity position="-17 19.3 0">
+          <a-entity
+            position="-0.6 0.13 0"
+            text="font: aileronsemibold; width: 12; color: black; value: TRAGETS\nREMAINING"
+          ></a-entity>
+          <a-entity
+            id="targets"
+            position="-8 0.3 0"
+            text="font: exo2bold; align: center; width: 30; color: black; value: 20"
+          ></a-entity>
+        </a-entity>
+
+        <!-- Score -->
+        <a-entity position="26.5 21.5 0">
+          <a-entity
+            position=""
+            text="font: exo2bold; align: center; width: 40; color: black; value: SCORE"
+          ></a-entity>
+          <a-entity
+            id="score"
+            position="0 -2 0"
+            text="font: exo2bold; align: center; width: 40; color: black; value: 0"
+          ></a-entity>
+        </a-entity>
+      </a-entity>
+
+        <!-- Ending -->
+        <a-entity
+          id="game_over"
+          position="0 7.5 0"
+          text="font: exo2bold; align: center; width: 100; color: white;value: Game Over!!!"
+          visible="false"
+        ></a-entity>
+
+        <a-entity id="completed" position="1.5 1 -3"
+          text="font: mozillavr; width:5; height: 5; value: Level Completed :)" visible="false">
+        </a-entity>
+
+      
+      
+    </a-scene>
+  </body>
+</html>
